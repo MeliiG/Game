@@ -1,2 +1,1 @@
-# SGE
-Sistema de Gestión Escolar 
+# Game
