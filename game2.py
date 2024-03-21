@@ -20,6 +20,12 @@ imagenes_dado = cargar_imagenes_dado()
 #imagen_serpiente = pygame.image.load(os.path.join("imagenes", "snake.png")).convert_alpha()
 imagen_tablero = pygame.image.load(os.path.join("imagenes", "tablero1.png")).convert_alpha()  # Cargar la imagen del tablero
 imagen_tablero = pygame.transform.scale(imagen_tablero, (ANCHO_CELDA * 8, ALTO_CELDA * 8))  # Ajustar el tamaño de la imagen del tablero
+musica_fondo = pygame.mixer.Sound(os.path.join("imagenes", "music.mp3"))  
+
+# Función para reproducir la música de fondo
+def reproducir_musica():
+    pygame.mixer.music.load(os.path.join("imagenes", "music.mp3"))  
+    pygame.mixer.music.play(-1)  # El argumento -1 indica que la música se repetirá indefinidamente
 
 POSICION_INICIAL = [7, 0]
 
@@ -91,6 +97,7 @@ def mover_ficha(pos_ini, pos_fin, cant_pasos, dado):
 
 # Función principal del juego
 def main():
+    reproducir_musica()
     pos_ficha = list(POSICION_INICIAL)
     boton = pygame.Rect(ANCHO - ANCHO_DADO - 100, 70, ANCHO_DADO, ALTO_DADO)
     dado = 1
