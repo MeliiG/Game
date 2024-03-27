@@ -1,8 +1,15 @@
 import random
+import os
+import pygame
 
 class SerpientesYEscaleras:
     """Clase que implementa el juego de Serpientes y Escaleras."""
     def __init__(self):
+        self.carpeta_imagenes = "imagenes"
+        pygame.init()  # Inicializar Pygame
+        pygame.mixer.init()  # Inicializar el mezclador de sonido de Pygame
+        ruta_musica = os.path.join(self.carpeta_imagenes, "music.mp3")
+        pygame.mixer.music.load("imagenes/music.mp3")  # Carga la música de fondo
         self.tablero = self.crear_tablero()
         self.serpientes = {20: 6, 29: 10, 38: 13, 52: 25}  # Definir las serpientes
         self.escaleras = {4: 22, 14: 32, 36: 60, 35: 53}  # Definir las escaleras
@@ -29,6 +36,11 @@ class SerpientesYEscaleras:
         }
         self.historial_jugadores = []  # Historial de jugadores
         self.cargar_historial_jugadores()  # Cargar historial de jugadores al inicio
+    
+    def reproducir_musica(self):
+        ruta_musica = os.path.join(self.carpeta_imagenes, "music.mp3")
+        pygame.mixer.music.load("imagenes/music.mp3")  # Carga la música de fondo
+        pygame.mixer.music.play(-1)  # Reproduce la música en un bucle infinito
 
     def crear_tablero(self):
         """Crea un tablero de 8x8 con números del 1 al 64."""
@@ -163,7 +175,7 @@ class SerpientesYEscaleras:
     def jugar(self):
         """Función principal para ejecutar el juego."""
         print("\n\033[34m\033[1mBienvenido a 🐍 Serpientes y Escaleras 🪜\033[0m")
-
+        self.reproducir_musica()  # Llamar a reproducir_musica() antes de comenzar el juego
         self.elegir_dificultad()
         while True:
             input("Presiona Enter para lanzar el dado...")
