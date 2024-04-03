@@ -1,46 +1,48 @@
 import random
-
 class SerpientesYEscaleras:
     def __init__(self):
-        self.nombre_jugador = None
+        self.nombre_jugador = None  # Inicializar el nombre del jugador
         self.tablero = self.crear_tablero()
-        self.serpientes = {20: 6, 29: 10, 38: 13, 52: 25}
-        self.escaleras = {4: 22, 14: 32, 36: 60, 35: 53}
-        self.jugadores = {}
-        self.posicion_jugador = 1
+        self.serpientes = {20: 6, 29: 10, 38: 13, 52: 25}  # Definir las serpientes
+        self.escaleras = {4: 22, 14: 32, 36: 60, 35: 53}  # Definir las escaleras
+        self.jugadores = {}  # Inicializar el diccionario de jugadores
+        self.posicion_jugador = 1  # Inicializar posición del jugador en 1
         self.dificultad = None
         self.max_intentos = None
-        self.max_intentos_guardados = None
+        self.max_intentos_guardados = None  # Variable para almacenar el número máximo de intentos
         self.puntaje = 0
         self.intentos_restantes = None
         self.preguntas = {
             "sustantivos": [
-                ("¿Qué cosa se usa para escribir en un papel?", "lapiz"), ("¿Qué objeto usas para cortar el césped?", "guadaña"), ("¿Qué cosa se usa para secar el cuerpo después de bañarse?", "toalla"),
-                ("¿Qué objeto se usa para abrir puertas?", "llave"), ("¿Qué cosa se usa para llevar libros a la escuela?", "maleta"),("¿Qué objeto se usa para tomar fotografías?", "camara"),
-                ("¿Qué cosa se usa para enfriar alimentos y bebidas?", "nevera"), ("¿Qué objeto se usa para cortar el pelo?", "tijera"),("¿Qué cosa se usa para jugar al fútbol?", "balón"),
-                ("¿Qué objeto se usa para cortar el pan?", "cuchillo"), ("¿Qué cosa se usa para limpiar el suelo?", "escoba")],
+                ("¿Qué cosa se usa para escribir en un papel?", "lapiz"),("¿Qué objeto usas para cortar el césped?", "guadaña"),("¿Qué cosa se usa para secar el cuerpo después de bañarse?", "toalla"),
+                ("¿Qué objeto se usa para abrir puertas?", "llave"),("¿Qué cosa se usa para llevar libros a la escuela?", "maleta"),("¿Qué objeto se usa para tomar fotografías?", "camara"),
+                ("¿Qué cosa se usa para enfriar alimentos y bebidas?", "nevera"),("¿Qué objeto se usa para cortar el pelo?", "tijera"),("¿Qué cosa se usa para jugar al fútbol?", "balón"),
+                ("¿Qué objeto se usa para cortar el pan?", "cuchillo"),("¿Qué cosa se usa para limpiar el suelo?", "escoba")],
             "verbos": [
-                ("¿Qué acción realizas cuando te lavas las manos?", "lavarse"), ("¿Qué acción realizas cuando te cepillas los dientes?", "cepillarse"),("¿Qué acción realizas cuando te peinas el cabello?", "peinarse"),
-                ("¿Qué acción realizas cuando te bañas en la ducha?", "bañarse"), ("¿Qué acción realizas cuando cocinas la cena?", "cocinar"),("¿Qué acción realizas cuando limpias el suelo?", "limpiar"),
-                ("¿Qué acción realizas cuando juegas con un balón?", "jugar"), ("¿Qué acción realizas cuando cortas verduras?", "cortar"),("¿Qué acción realizas cuando corres en el parque?", "correr"),
-                ("¿Qué acción realizas cuando escuchas música?", "escuchar"), ("¿Qué acción realizas cuando lees un libro?", "leer")]}
-        self.historial_jugadores = []
-        self.cargar_historial_jugadores()
+                        ("¿Qué acción realizas cuando te lavas las manos?", "lavarse"),("¿Qué acción realizas cuando te cepillas los dientes?", "cepillarse"),("¿Qué acción realizas cuando te peinas el cabello?", "peinarse"),
+                        ("¿Qué acción realizas cuando te bañas en la ducha?", "bañarse"),("¿Qué acción realizas cuando cocinas la cena?", "cocinar"),("¿Qué acción realizas cuando limpias el suelo?", "limpiar"),
+                        ("¿Qué acción realizas cuando juegas con un balón?", "jugar"),("¿Qué acción realizas cuando cortas verduras?", "cortar"),("¿Qué acción realizas cuando corres en el parque?", "correr"),
+                        ("¿Qué acción realizas cuando escuchas música?", "escuchar"),("¿Qué acción realizas cuando lees un libro?", "leer")]}
+        self.historial_jugadores = []  # Historial de jugadores
+        self.cargar_historial_jugadores()  # Cargar historial de jugadores al inicio
 
     def crear_tablero(self):
+        """Crea un tablero de 8x8 con números del 1 al 64."""
         tablero = []
-        contador = 1
+        contador = 1  # Contador inicializado en 1
         for i in range(8):
             fila = []
             for _ in range(8):
                 fila.append(contador)
-                contador += 1
+                contador += 1  # Incrementar el contador
             if i % 2 != 0:
                 fila.reverse()
             tablero.append(fila)
         return tablero
 
     def elegir_dificultad(self):
+        """Permite al jugador elegir el nivel de dificultad y mostrar las instrucciones del juego."""
+        self.nombre_jugador = input("Ingresa tu nombre para empezar el juego: ")
         print("\nInstrucciones del juego:")
         print("- Si caes en una casilla PAR, deberás responder una pregunta sobre un verbo.")
         print("- Si caes en una casilla IMPAR, deberás responder una pregunta sobre un sustantivo.")
@@ -52,11 +54,10 @@ class SerpientesYEscaleras:
             if eleccion in ["1", "2"]:
                 self.dificultad = int(eleccion)
                 self.max_intentos_guardados = 5 if self.dificultad == 1 else 2
-                self.intentos_restantes = self.max_intentos_guardados
+                self.intentos_restantes = self.max_intentos_guardados  # Actualizar intentos restantes
                 break
             else:
                 print("Por favor, ingresa 1 o 2.")
-
 
     def mostrar_tablero(self):
         """Imprime el tablero y el puntaje actual del jugador."""
@@ -93,11 +94,9 @@ class SerpientesYEscaleras:
             if fila != 0:
                 print("╟─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────╢")
         print("╚═══════════════════════════════════════════════╝")
-
-        print(f"\nPuntaje actual : {self.puntaje}")  # Mostrar el puntaje actual del jugador
+        print(f"Puntaje actual : {self.puntaje}")# Mostrar el puntaje actual del jugador
         print(f"Intentos restantes: {self.intentos_restantes}")  # Mostrar intentos restantes
 
-    
 
     def lanzar_dado(self):
         """Simula tirar un dado y muestra la cara del dado."""
@@ -158,7 +157,7 @@ class SerpientesYEscaleras:
         if columna == 0:
             self.puntaje += 15
             print(f"¡Has completado una columna y has ganado 15 puntos! Tu puntaje total es: {self.puntaje}")
-
+    
     def jugar(self):
         """Función principal para ejecutar el juego."""
         print("\n\033[34m\033[1mBienvenido a 🐍 Serpientes y Escaleras 🪜\033[0m")
@@ -207,7 +206,7 @@ class SerpientesYEscaleras:
             puntaje_actual = datos["Puntaje"][-1] if datos["Puntaje"] else 0  # Obtener el puntaje actual del jugador
             print(f"| {jugador.ljust(9)}| {str(total_turnos).center(15)}| {str(puntaje_actual).center(15)}|") # Imprimir cada fila de la tabla 
         print("-" * 45)# Imprimir línea inferior de la tabla
-
+        
     def cargar_historial_jugadores(self):
         """Carga los datos del historial de jugadores desde un archivo."""
         try:
